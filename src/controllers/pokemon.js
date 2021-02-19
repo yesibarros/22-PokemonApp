@@ -45,8 +45,8 @@ const pokemonController = {
     },
 
     update(req, res) {
-      const {nombre,tipo,level} = req.body
-      PokemonModel.findByIdAndUpdate({ _id :req.params.id},{nombre,tipo,level})
+      const {nombre,tipo,level,ataques} = req.body
+      PokemonModel.findByIdAndUpdate({ _id :req.params.id},{nombre,tipo,level,ataques})
       .then((pokemon)=>res.status(201).send(pokemon))
       .catch (()=> res.sendStatus(400))
       
