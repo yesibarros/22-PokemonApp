@@ -6,7 +6,11 @@ const pokemonController = {
     .then(pokemons=>{
       // console.log("POKEMONS", )
       res.send(pokemons);
+      return pokemons
     })  
+    .then((x)=>{
+      console.log("PAPAPAPAA",x)
+    })
     .catch(err => {
       res.status(500).send(err);
     });
@@ -17,8 +21,14 @@ const pokemonController = {
     const id = req.params.id;
     
     PokemonModel.findById(id)
+    .populate('ataques')
+    
     .then(pokemon=>{
       res.send(pokemon);
+      return pokemon
+    })
+    .then((y)=>{
+      console.log("LALALALLAALALALA",y)
     })
     .catch(err=>{
       res.status(404).send(err)
@@ -34,25 +44,40 @@ const pokemonController = {
       
     },
 
-    
     update(req, res) {
-      const pokemonId = req.params.id
-      const pokemonbBody = req.body
-      PokemonModel.findByIdAndUpdate(pokemonId,pokemonbBody)
+      const {nombre,tipo,level} = req.body
+      PokemonModel.findByIdAndUpdate({ _id :req.params.id},{nombre,tipo,level})
       .then((pokemon)=>res.status(201).send(pokemon))
       .catch (()=> res.sendStatus(400))
       
     },
-
-    delete(req, res) {
+    
+    // update(req, res) {
+    //   const pokemonId = req.params.id
+    //   const pokemonbBody = req.body
+    //   PokemonModel.findByIdAndUpdate(pokemonId,pokemonbBody)
+    //   .then((pokemon)=>res.status(201).send(pokemon))
+    //   .catch (()=> res.sendStatus(400))
       
-      const pokemonId = req.params.id
-      const pokemonbBody = req.body
-      PokemonModel.findByIdAndDelete(pokemonId,pokemonbBody)
+    // },
+
+    // delete(req, res) {
+    //   console.log("REQ", req.path)
+
+    //   const pokemonId = req.params.id
+    //   const pokemonbBody = req.body
+    //   PokemonModel.deleteOne(pokemonId,pokemonbBody)
+    //   .then((pokemon)=>res.status(201).send(pokemon))
+    //   .catch (()=> res.sendStatus(404))
+      
+    // },
+    delete(req, res) {
+      const {nombre,tipo,level} = req.body
+      PokemonModel.deleteOne({ _id :req.params.id},{nombre,tipo,level})
       .then((pokemon)=>res.status(201).send(pokemon))
       .catch (()=> res.sendStatus(400))
       
-    }
+    },
   
 };
 

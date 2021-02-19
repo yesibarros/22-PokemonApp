@@ -35,6 +35,7 @@
                                   `---.__,--.'mh
  */
 const mongoose = require('mongoose');
+// const routes = express().Router
 const { Schema } = mongoose;
 
 
@@ -56,7 +57,10 @@ const schema = new Schema({
     imgURI: {
       type: String,
       default: "https://i.imgur.com/Z0869Hm.jpg"
-    }
+    },
+    ataques:[{
+      type: Schema.Types.ObjectId, ref: 'Attacks'
+    }]
 });
 const Pokemon = mongoose.model('Pokemons', schema);
 
